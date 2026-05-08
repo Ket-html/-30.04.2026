@@ -55,6 +55,7 @@ a {
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
 }
 
 .navbar .container {
@@ -82,6 +83,44 @@ a {
     font-weight: 700;
 }
 
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+    width: 32px;
+    height: 24px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.nav-toggle-label span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #052838;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    margin-bottom: 6px;
+}
+
+.nav-toggle-label span:last-child {
+    margin-bottom: 0;
+}
+
+#nav-toggle:checked+.nav-toggle-label span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+#nav-toggle:checked+.nav-toggle-label span:nth-child(2) {
+    opacity: 0;
+}
+
+#nav-toggle:checked+.nav-toggle-label span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
 
 /* Тело Hero */
 .hero-body {
@@ -451,6 +490,11 @@ body {
     /* В реальном проекте тут будет JS-слайдер */
 }
 
+.portfolio__slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
 .portfolio__card {
     height: 544px;
     width: 544px;
@@ -608,6 +652,7 @@ body {
     /* Состояние 01/02 — это половина */
     height: 100%;
     background-color: #052D40;
+    transition: width 0.3s ease;
     /* Цвет заполнения */
 }
 
@@ -998,6 +1043,7 @@ body {
     width: 50%;
     height: 100%;
     background: #052D40;
+    transition: width 0.3s ease;
 }
 
 .view-portfolio {
@@ -1424,5 +1470,495 @@ body {
 
     .social-icons {
         justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar .container {
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .nav-toggle-label {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 84px;
+        right: 20px;
+        left: 20px;
+        background: #ffffff;
+        flex-direction: column;
+        gap: 16px;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        z-index: 50;
+    }
+
+    .nav-toggle:checked+.nav-toggle-label+.nav-menu {
+        display: flex;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        font-size: 15px;
+        color: var(--dark-blue);
+    }
+
+    .hero-body {
+        flex-direction: column;
+        min-height: auto;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .hero-text-block {
+        width: 100%;
+        max-width: 760px;
+    }
+
+    .hero-text-block h1 {
+        font-size: 56px;
+        line-height: 1.05;
+    }
+
+    .hero-image-block {
+        position: relative;
+        width: 100%;
+        height: 520px;
+        margin-top: 32px;
+    }
+
+    .hero-image-block img {
+        border-radius: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        height: auto;
+        padding: 16px 0;
+    }
+
+    .navbar .container {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .hero-body {
+        padding: 0 0 24px;
+    }
+
+    .hero-text-block h1 {
+        font-size: 42px;
+    }
+
+    .hero-text-block p {
+        font-size: 16px;
+        max-width: 100%;
+    }
+
+    .hero-image-block {
+        height: 420px;
+        margin-top: 24px;
+    }
+
+    .cta-container {
+        padding: 32px 20px;
+    }
+
+    .cta-content,
+    .cta-image-box {
+        width: 100%;
+    }
+
+    .cta-image-box {
+        height: 320px;
+    }
+}
+
+@media (max-width: 425px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .hero-text-block h1 {
+        font-size: 32px;
+    }
+
+    .hero-text-block p {
+        font-size: 15px;
+    }
+
+    .hero-image-block {
+        height: 280px;
+    }
+
+    .cta-wrapper {
+        padding: 24px 16px;
+    }
+
+    .cta-container {
+        padding: 24px 16px;
+        border-radius: 24px;
+    }
+
+    .cta-title {
+        font-size: 28px;
+    }
+
+    .cta-form {
+        flex-direction: column;
+    }
+
+    .cta-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* PORTFOLIO */
+    .portfolio .container {
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .portfolio__slider-wrapper {
+        min-height: auto;
+    }
+
+    .portfolio__slider-row {
+        min-height: auto;
+        overflow: hidden;
+    }
+
+    .portfolio__slider {
+        gap: 12px;
+    }
+
+    .portfolio__card {
+        width: 260px;
+        height: 340px;
+        flex-shrink: 0;
+    }
+
+    .portfolio__arrow_prev {
+        left: -16px;
+    }
+
+    .portfolio__arrow_next {
+        right: -16px;
+    }
+
+    .portfolio-cta {
+        position: static;
+        margin-top: 24px;
+    }
+
+    /* CERTIFICATIONS */
+    .credentials {
+        height: auto;
+        padding: 60px 20px;
+        overflow: hidden;
+    }
+
+    .credentials__container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .credentials__header {
+        width: 100%;
+        height: auto;
+        margin-bottom: 32px;
+    }
+
+    .credentials__title {
+        font-size: 36px;
+    }
+
+    .credentials__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credential-card {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        padding: 24px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credentials__footer {
+        width: 100%;
+        justify-content: center;
+        position: relative;
+        z-index: 0;
+    }
+
+    /* PARTNERS */
+    .partners-section {
+        position: relative;
+        z-index: 0;
+    }
+
+    .partners-section .container {
+        padding: 40px 20px;
+        gap: 32px;
+    }
+
+    .partners-section .title {
+        font-size: 36px;
+    }
+
+    .project-card__image-wrapper {
+        height: 320px;
+        border-radius: 20px;
+    }
+
+}
+
+@media (max-width: 425px) {
+
+    /* PORTFOLIO */
+    .portfolio .container {
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .portfolio__slider-wrapper {
+        min-height: auto;
+    }
+
+    .portfolio__slider-row {
+        min-height: auto;
+        overflow: hidden;
+    }
+
+    .portfolio__slider {
+        gap: 12px;
+    }
+
+    .portfolio__card {
+        width: 260px;
+        height: 340px;
+        flex-shrink: 0;
+    }
+
+    .portfolio__arrow_prev {
+        left: -16px;
+    }
+
+    .portfolio__arrow_next {
+        right: -16px;
+    }
+
+    .portfolio-cta {
+        position: static;
+        margin-top: 24px;
+    }
+
+    /* CERTIFICATIONS */
+    .credentials {
+        height: auto;
+        padding: 60px 20px;
+        overflow: hidden;
+    }
+
+    .credentials__container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .credentials__header {
+        width: 100%;
+        height: auto;
+        margin-bottom: 32px;
+    }
+
+    .credentials__title {
+        font-size: 36px;
+    }
+
+    .credentials__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credential-card {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        padding: 24px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credentials__footer {
+        width: 100%;
+        justify-content: center;
+        position: relative;
+        z-index: 0;
+    }
+
+    /* PARTNERS */
+    .partners-section {
+        position: relative;
+        z-index: 0;
+    }
+
+    .partners-section .container {
+        padding: 40px 20px;
+        gap: 32px;
+    }
+
+    .partners-section .title {
+        font-size: 36px;
+    }
+
+    .project-card__image-wrapper {
+        height: 320px;
+        border-radius: 20px;
+    }
+
+}
+
+/* Адаптив для планшетов и мобильных */
+@media (max-width: 1024px) {
+    .credentials__grid {
+        display: flex;
+        /* Выстраиваем карточки в одну линию */
+        overflow-x: auto;
+        /* Включаем горизонтальный скролл */
+        scroll-snap-type: x mandatory;
+        /* "Примагничивание" карточек при скролле */
+        gap: 20px;
+        /* Расстояние между карточками */
+        padding: 20px 0;
+        /* Отступы сверху и снизу, чтобы тени не обрезались */
+
+        /* Скрываем стандартную полосу прокрутки для красоты */
+        scrollbar-width: none;
+        /* Для Firefox */
+    }
+
+    .credentials__grid::-webkit-scrollbar {
+        display: none;
+        /* Для Chrome, Safari, Edge */
+    }
+
+    .credential-card {
+        flex: 0 0 280px;
+        /* Фиксируем ширину карточки, чтобы она не сжималась */
+        scroll-snap-align: start;
+        /* Карточка будет прилипать к левому краю */
+    }
+}
+
+/* Уточнения для маленьких экранов */
+@media (max-width: 425px) {
+    .credentials__grid {
+        gap: 15px;
+        /* Чуть меньше расстояние на телефонах */
+        padding-left: 20px;
+        /* Чтобы первая карточка не прилипала к краю экрана */
+    }
+
+    .credential-card {
+        flex: 0 0 260px;
+        /* На мобилках делаем карточки чуть уже */
+    }
+}
+
+@media (max-width: 1024px) {
+
+    /* 1. Убираем ограничение ширины контейнера, если оно есть */
+    .faq-container {
+        width: 100%;
+        padding: 0 20px;
+        /* Отступы по бокам, чтобы текст не прилипал */
+        box-sizing: border-box;
+    }
+
+    /* 2. Стили для самого аккордеона */
+    .faq-item {
+        border-bottom: 1px solid #E0E0E0;
+        /* Линия-разделитель как на скрине */
+        padding: 20px 0;
+    }
+
+    /* 3. Оформление заголовка вопроса */
+    .faq-item summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        /* Убираем стандартную стрелочку браузера */
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    /* Убираем стандартный маркер в Safari */
+    .faq-item summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* 4. Стили для вашей иконки (кружок со стрелочкой) */
+    .faq-item .icon {
+        width: 32px;
+        height: 32px;
+        background: #F4F7F9;
+        /* Светлый фон кружка */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease;
+    }
+
+    /* Поворот стрелочки при открытии */
+    .faq-item[open] .icon {
+        transform: rotate(180deg);
+    }
+
+    /* 5. Контент ответа */
+    .faq-content {
+        padding-top: 15px;
+        color: #5F6368;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 425px) {
+    .faq-container {
+        padding: 0 15px;
+        /* На очень узких экранах отступы чуть меньше */
+    }
+
+    .faq-item summary {
+        font-size: 15px;
+        /* Чуть уменьшаем шрифт заголовка */
     }
 }
