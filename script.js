@@ -1,75 +1,109 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const fmt = (n) => String(n).padStart(2, '0');
 
     // =============================================
-    // PORTFOLIO SLIDER
+    // PORTFOLIO SLIDER (С ПЕРЕМЕШИВАНИЕМ ВТОРОЙ СТРАНИЦЫ)
     // =============================================
     const portfolioSlider = document.querySelector('.portfolio__slider');
+    const sliderRow = document.querySelector('.portfolio__slider-row');
     const portfolioPrev = document.querySelector('.portfolio__arrow_prev');
     const portfolioNext = document.querySelector('.portfolio__arrow_next');
+
     const portfolioCurrent = document.querySelector('.portfolio-controls .current');
     const portfolioTotal = document.querySelector('.portfolio-controls .total');
     const portfolioFill = document.querySelector('.portfolio-controls .progress-fill');
 
-    if (portfolioSlider && portfolioPrev && portfolioNext) {
-        const cards = Array.from(portfolioSlider.querySelectorAll('.portfolio__card'));
-        const total = cards.length;
-        let current = 0;  // индекс активной карточки (0-based)
+    if (portfolioSlider && sliderRow) {
+        let cards = Array.from(portfolioSlider.querySelectorAll('.portfolio__card'));
+        const visibleAmount = 3;
 
-        const fmt = (n) => String(n).padStart(2, '0');
+        // --- ЛОГИКА ПЕРЕСТАНОВКИ ---
+        // Если карточек 6, берем вторую тройку (индексы 3, 4, 5) и разворачиваем их
+        if (cards.length >= 6) {
+            const firstHalf = cards.slice(0, 3);
+            const secondHalf = cards.slice(3, 6).reverse(); // Делаем 6, 5, 4
+            const remaining = cards.slice(6);
 
-        // Ставим начальные стили на обёртку и сам слайдер
-        portfolioSlider.style.display = 'flex';
-        portfolioSlider.style.transition = 'transform 0.5s ease-in-out';
-        portfolioSlider.style.willChange = 'transform';
-        // gap уже задан в CSS (24px), убираем overflow на родителе
-        const sliderRow = document.querySelector('.portfolio__slider-row');
-        if (sliderRow) sliderRow.style.overflow = 'hidden';
+            const newOrder = [...firstHalf, ...secondHalf, ...remaining];
 
-        function getCardWidth() {
-            // Ширина одной карточки + gap
-            const card = cards[0];
-            const gap = parseInt(getComputedStyle(portfolioSlider).gap) || 24;
-            return card.offsetWidth + gap;
+            // Очищаем слайдер и вставляем карточки в новом порядке
+            portfolioSlider.innerHTML = '';
+            newOrder.forEach(card => portfolioSlider.appendChild(card));
+
+            // Обновляем массив ссылок на карточки
+            cards = newOrder;
         }
 
+        const totalPages = Math.ceil(cards.length / visibleAmount);
+        let currentPage = 0;
+
+        portfolioSlider.style.display = 'flex';
+        portfolioSlider.style.transition = 'none';
+        sliderRow.style.overflow = 'hidden';
+
         function updatePortfolio() {
-            const offset = current * getCardWidth();
+            const gap = parseInt(getComputedStyle(portfolioSlider).gap) || 24;
+            const containerWidth = sliderRow.offsetWidth;
+            const cardWidth = (containerWidth - (gap * (visibleAmount - 1))) / visibleAmount;
+
+            cards.forEach(card => {
+                card.style.minWidth = `${cardWidth}px`;
+                card.style.maxWidth = `${cardWidth}px`;
+                card.style.width = `${cardWidth}px`;
+            });
+
+            const offset = currentPage * (containerWidth + gap);
             portfolioSlider.style.transform = `translateX(-${offset}px)`;
 
-            if (portfolioCurrent) portfolioCurrent.textContent = fmt(current + 1);
-            if (portfolioTotal) portfolioTotal.textContent = `/${fmt(total)}`;
-            if (portfolioFill) portfolioFill.style.width = `${((current + 1) / total) * 100}%`;
+            if (portfolioCurrent) portfolioCurrent.textContent = fmt(currentPage + 1);
+            if (portfolioTotal) portfolioTotal.textContent = `/${fmt(totalPages)}`;
+            if (portfolioFill) {
+                portfolioFill.style.width = `${((currentPage + 1) / totalPages) * 100}%`;
+            }
         }
 
         portfolioNext.addEventListener('click', () => {
-            current = current < total - 1 ? current + 1 : 0;
+            currentPage = (currentPage < totalPages - 1) ? currentPage + 1 : 0;
             updatePortfolio();
         });
 
         portfolioPrev.addEventListener('click', () => {
-            current = current > 0 ? current - 1 : total - 1;
+            currentPage = (currentPage > 0) ? currentPage - 1 : totalPages - 1;
             updatePortfolio();
         });
 
-        // Первичная инициализация
-        updatePortfolio();
+        window.addEventListener('resize', updatePortfolio);
+        setTimeout(updatePortfolio, 50);
     }
 
+    // =============================================
+    // HEADER NAV LINK ACTIVE STATE
+    // =============================================
+    const navLinks = document.querySelectorAll('.nav__link');
+
+    function updateNavActive() {
+        const currentHash = window.location.hash || '#main';
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentHash) {
+                link.classList.add('nav__link_active');
+            } else {
+                link.classList.remove('nav__link_active');
+            }
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            setTimeout(updateNavActive, 0);
+        });
+    });
+
+    window.addEventListener('hashchange', updateNavActive);
+    updateNavActive();
 
     // =============================================
     // PARTNERS SLIDER
     // =============================================
-    const partnerWrapper = document.querySelector('.project-card__image-wrapper');
-    const partnerPrev = document.querySelector('.nav-btn_prev');
-    const partnerNext = document.querySelector('.nav-btn_next');
-    const partnerCurrent = document.querySelector('.slider-footer .current');
-    const partnerTotal = document.querySelector('.slider-footer .total');
-    const partnerFill = document.querySelector('.slider-footer__fill');
-    const partnerImg = document.querySelector('.project-card__image');
-    const partnerTitle = document.querySelector('.project-card__content h3');
-    const partnerDesc = document.querySelector('.project-card__content p');
-
-    // Данные слайдов партнёров — замени src на свои реальные изображения
     const partnerSlides = [
         {
             src: '47dc690fc484cd1476db8f6f3e664ac949660c4c.jpg',
@@ -88,75 +122,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    if (partnerWrapper && partnerPrev && partnerNext) {
-        let partnerIndex = 0;
-        const fmt = (n) => String(n).padStart(2, '0');
+    const pImg = document.querySelector('.project-card__image');
+    const pTitle = document.querySelector('.project-card__content h3');
+    const pDesc = document.querySelector('.project-card__content p');
+    const pNext = document.querySelector('.nav-btn_next');
+    const pPrev = document.querySelector('.nav-btn_prev');
+    const pFill = document.querySelector('.slider-footer__fill');
+    const pCurr = document.querySelector('.slider-footer .current');
+    const pTotal = document.querySelector('.slider-footer .total');
 
+    if (pImg && pNext && pPrev) {
+        let pIndex = 0;
         function updatePartner() {
-            const slide = partnerSlides[partnerIndex];
-
-            // Плавное переключение через opacity
-            partnerWrapper.style.opacity = '0';
-            partnerWrapper.style.transition = 'opacity 0.4s ease';
-
-            setTimeout(() => {
-                if (partnerImg) partnerImg.src = slide.src;
-                if (partnerImg) partnerImg.alt = slide.title;
-                if (partnerTitle) partnerTitle.textContent = slide.title;
-                if (partnerDesc) partnerDesc.textContent = slide.desc;
-
-                partnerWrapper.style.opacity = '1';
-            }, 400);
-
-            const total = partnerSlides.length;
-            if (partnerCurrent) partnerCurrent.textContent = fmt(partnerIndex + 1);
-            if (partnerTotal) partnerTotal.textContent = `/${fmt(total)}`;
-            if (partnerFill) partnerFill.style.width = `${((partnerIndex + 1) / total) * 100}%`;
+            const s = partnerSlides[pIndex];
+            pImg.src = s.src;
+            if (pTitle) pTitle.textContent = s.title;
+            if (pDesc) pDesc.textContent = s.desc;
+            if (pCurr) pCurr.textContent = fmt(pIndex + 1);
+            if (pTotal) pTotal.textContent = `/${fmt(partnerSlides.length)}`;
+            if (pFill) pFill.style.width = `${((pIndex + 1) / partnerSlides.length) * 100}%`;
         }
-
-        partnerNext.addEventListener('click', () => {
-            partnerIndex = partnerIndex < partnerSlides.length - 1 ? partnerIndex + 1 : 0;
-            updatePartner();
-        });
-
-        partnerPrev.addEventListener('click', () => {
-            partnerIndex = partnerIndex > 0 ? partnerIndex - 1 : partnerSlides.length - 1;
-            updatePartner();
-        });
-
-        // Первичная инициализация
+        pNext.addEventListener('click', () => { pIndex = (pIndex + 1) % partnerSlides.length; updatePartner(); });
+        pPrev.addEventListener('click', () => { pIndex = (pIndex - 1 + partnerSlides.length) % partnerSlides.length; updatePartner(); });
         updatePartner();
     }
-
-
-    // =============================================
-    // FAQ ACCORDION (плавное открытие)
-    // =============================================
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        item.addEventListener('toggle', () => {
-            // При открытии одного — закрываем остальные
-            if (item.open) {
-                faqItems.forEach(other => {
-                    if (other !== item && other.open) other.removeAttribute('open');
-                });
-            }
-        });
-    });
-
-
-    // =============================================
-    // МОБИЛЬНОЕ МЕНЮ (на всякий случай, если CSS-чекбокс не работает)
-    // =============================================
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    if (navToggle && navMenu) {
-        // Закрытие меню при клике на ссылку
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navToggle.checked = false;
-            });
-        });
-    }
-
 });

@@ -242,6 +242,63 @@ bout-section {
     display: block;
 }
 
+@media (max-width: 1200px) {
+
+    .content-wrapper {
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 40px;
+
+    }
+
+    .container {
+
+        padding: 0 40px;
+
+    }
+
+    .image-content img {
+
+        width: 100%;
+
+        height: auto;
+
+    }
+
+    .about-section {
+
+        padding: 60px 0;
+
+    }
+
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 1200px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .container {
+        padding: 0 40px;
+    }
+
+    .image-content img {
+        width: 100%;
+        height: auto;
+    }
+
+    .about-section {
+        padding: 60px 0;
+    }
+}
+
+
 .portfolio {
     display: flex;
     flex-wrap: wrap;
@@ -566,6 +623,7 @@ bout-section {
     opacity: 0.5;
 }
 
+/* Бейдж "Winner" */
 .credential-card__badge {
     position: absolute;
     bottom: 32px;
@@ -737,7 +795,9 @@ bout-section {
     height: 500px;
     /* Примерная высота с макета */
     border-radius: 20px;
+    /* Скругление на макете чуть меньше, чем 32px */
     overflow: visible;
+    /* ВАЖНО: меняем на visible, чтобы стрелки не обрезались! */
 }
 
 .project-card__image {
@@ -745,6 +805,7 @@ bout-section {
     height: 100%;
     object-fit: cover;
     border-radius: 20px;
+    /* Дублируем скругление здесь */
 }
 
 .project-card__overlay {
@@ -753,6 +814,7 @@ bout-section {
     right: 0;
     bottom: 0;
     height: auto;
+    /* Пусть высота зависит от контента */
     padding: 30px 40px;
     background: rgba(5, 40, 56, 0.85);
     /* Полупрозрачный синий */
@@ -882,35 +944,46 @@ project-card__content {
 .faq-section {
     width: 100%;
     max-width: 1920px;
+    /* Общая ширина из скриншота 1 */
     margin: 0 auto;
     padding: 100px 120px;
+    /* Top: 100, Right/Left: 120 из скриншота 1 */
     box-sizing: border-box;
 }
 
 .faq-container {
     width: 1680px;
+    /* Fill (1,680px) из скриншота 2 */
     display: flex;
     flex-direction: row;
+    /* Horizontal Flow из скриншота 2 */
     gap: 64px;
+    /* Gap 64px из скриншота 2 */
     align-items: flex-start;
 }
 
+/* Блок заголовка */
 .faq-title-block {
     width: 788px;
+    /* Fill (788px) из скриншота 7 */
     display: flex;
     flex-direction: column;
     gap: 24px;
+    /* Gap 24px из скриншота 7 */
 }
 
 .faq-title {
     font-size: 64px;
+    /* Примерный размер исходя из веса заголовка */
     line-height: 1.05;
     margin: 0;
     color: #051c2c;
 }
 
+/* Блок аккордеона */
 .faq-accordion {
     width: 828px;
+    /* Fixed (828px) из скриншота 3 */
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -922,6 +995,7 @@ project-card__content {
     box-sizing: border-box;
 }
 
+/* Базовая настройка для всех строк */
 .faq-item summary {
     list-style: none;
     display: flex;
@@ -940,6 +1014,7 @@ project-card__content {
     display: none;
 }
 
+/* Иконка стрелочки */
 .icon {
     display: inline-flex;
     align-items: center;
@@ -957,10 +1032,12 @@ project-card__content {
     margin-bottom: 8px;
 }
 
+/* Специфика для ЗАКРЫТЫХ строк */
 .faq-item:not([open]) {
     min-height: 96px;
 }
 
+/* Специфика для ОТКРЫТОЙ строки */
 .faq-item[open] {
     min-height: 168px;
 }
@@ -974,6 +1051,7 @@ project-card__content {
 
 :root {
     --bg-dark: #051d29;
+    /* Глубокий темно-синий из макета */
     --text-white: #ffffff;
     --input-bg: rgba(255, 255, 255, 0.05);
     --input-border: rgba(255, 255, 255, 0.2);
@@ -985,6 +1063,7 @@ body {
     background-color: #ffffff;
 }
 
+/* Обертка для соблюдения размеров 1920×890 */
 .cta-wrapper {
     width: 100%;
     max-width: 1920px;
@@ -998,6 +1077,7 @@ body {
     background: transparent;
 }
 
+/* Основной контейнер секции 1680×650 */
 .cta-container {
     width: 1680px;
     height: 650px;
@@ -1013,6 +1093,7 @@ body {
     padding: 40px 50px;
 }
 
+/* Контентная часть (626×404) */
 .cta-content {
     width: 626px;
     min-height: 404px;
@@ -1114,6 +1195,32 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 24px;
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 1024px) {
+    .cta-wrapper {
+        padding: 40px 20px;
+    }
+
+    .cta-container {
+        flex-direction: column;
+        padding: 40px 24px;
+    }
+
+    .cta-content {
+        flex: none;
+        width: 100%;
+    }
+
+    .cta-image-box {
+        width: 100%;
+        height: 300px;
+    }
+
+    .cta-title {
+        font-size: 32px;
+    }
 }
 
 .footer {
@@ -1230,22 +1337,22 @@ body {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.footer-form input:hover {
+footer-form input:hover {
     border-color: #7B92F1;
 }
 
 .footer-form input:focus {
     border-color: #5566FF;
-    box-shadow: 0 0 0 3px rgba(85, 102, 255, 0.15);
 }
 
 .footer-form input[type="tel"]:invalid:not(:placeholder-shown) {
     border-color: #E57373;
     background-color: #FFF8F8;
     color: #E57373;
+
 }
 
-.footer-form input[type="tel"]::placeholder {
+footer-form input[type="tel"]::placeholder {
     color: #D1D1D1;
 }
 
@@ -1261,6 +1368,58 @@ body {
 
 .footer-form button:hover {
     background-color: #073d57;
+}
+
+/* Адаптивность для планшетов и мобилок */
+@media (max-width: 1024px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-nav {
+        flex: none;
+        width: 100%;
+        justify-items: center;
+    }
+
+    .footer-brand,
+    .footer-cta {
+        flex: none;
+        width: 100%;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar .container {
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .nav-toggle-label {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 84px;
+        right: 20px;
+        left: 20px;
+        background: #ffffff;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    z-index: 50;
 }
 
 .nav-toggle:checked+.nav-toggle-label+.nav-menu {
@@ -1305,4 +1464,424 @@ body {
 
 .hero-image-block img {
     border-radius: 24px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        height: auto;
+        padding: 16px 0;
+    }
+
+    .navbar .container {
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .hero-body {
+        padding: 0 0 24px;
+    }
+
+    .hero-text-block h1 {
+        font-size: 42px;
+    }
+
+    .hero-text-block p {
+        font-size: 16px;
+        max-width: 100%;
+    }
+
+    .hero-image-block {
+        height: 420px;
+        margin-top: 24px;
+    }
+
+    .cta-container {
+        padding: 32px 20px;
+    }
+
+    .cta-content,
+    .cta-image-box {
+        width: 100%;
+    }
+
+    .cta-image-box {
+        height: 320px;
+    }
+}
+
+@media (max-width: 425px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .hero-text-block h1 {
+        font-size: 32px;
+    }
+
+    .hero-text-block p {
+        font-size: 15px;
+    }
+
+    .hero-image-block {
+        height: 280px;
+    }
+
+    .cta-wrapper {
+        padding: 24px 16px;
+    }
+
+    .cta-container {
+        padding: 24px 16px;
+        border-radius: 24px;
+    }
+
+    .cta-title {
+        font-size: 28px;
+    }
+
+    .cta-form {
+        flex-direction: column;
+    }
+
+    .cta-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* PORTFOLIO */
+    .portfolio .container {
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .portfolio__slider-wrapper {
+        min-height: auto;
+    }
+
+    .portfolio__slider-row {
+        min-height: auto;
+        overflow: hidden;
+    }
+
+    .portfolio__slider {
+        gap: 12px;
+    }
+
+    .portfolio__card {
+        width: 260px;
+        height: 340px;
+        flex-shrink: 0;
+    }
+
+    .portfolio__arrow_prev {
+        left: -16px;
+    }
+
+    .portfolio__arrow_next {
+        right: -16px;
+    }
+
+    .portfolio-cta {
+        position: static;
+        margin-top: 24px;
+    }
+
+    /* CERTIFICATIONS */
+    .credentials {
+        height: auto;
+        padding: 60px 20px;
+        overflow: hidden;
+    }
+
+    .credentials__container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .credentials__header {
+        width: 100%;
+        height: auto;
+        margin-bottom: 32px;
+    }
+
+    .credentials__title {
+        font-size: 36px;
+    }
+
+    .credentials__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credential-card {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        padding: 24px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credentials__footer {
+        width: 100%;
+        justify-content: center;
+        position: relative;
+        z-index: 0;
+    }
+
+    /* PARTNERS */
+    .partners-section {
+        position: relative;
+        z-index: 0;
+    }
+
+    .partners-section .container {
+        padding: 40px 20px;
+        gap: 32px;
+    }
+
+    .partners-section .title {
+        font-size: 36px;
+    }
+
+    .project-card__image-wrapper {
+        height: 320px;
+        border-radius: 20px;
+    }
+
+}
+
+@media (max-width: 425px) {
+
+    /* PORTFOLIO */
+    .portfolio .container {
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .portfolio__slider-wrapper {
+        min-height: auto;
+    }
+
+    .portfolio__slider-row {
+        min-height: auto;
+        overflow: hidden;
+    }
+
+    .portfolio__slider {
+        gap: 12px;
+    }
+
+    .portfolio__card {
+        width: 260px;
+        height: 340px;
+        flex-shrink: 0;
+    }
+
+    .portfolio__arrow_prev {
+        left: -16px;
+    }
+
+    .portfolio__arrow_next {
+        right: -16px;
+    }
+
+    .portfolio-cta {
+        position: static;
+        margin-top: 24px;
+    }
+
+    /* CERTIFICATIONS */
+    .credentials {
+        height: auto;
+        padding: 60px 20px;
+        overflow: hidden;
+    }
+
+    .credentials__container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .credentials__header {
+        width: 100%;
+        height: auto;
+        margin-bottom: 32px;
+    }
+
+    .credentials__title {
+        font-size: 36px;
+    }
+
+    .credentials__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credential-card {
+        width: 100%;
+        height: auto;
+        min-height: 200px;
+        padding: 24px;
+        position: relative;
+        z-index: 0;
+    }
+
+    .credentials__footer {
+        width: 100%;
+        justify-content: center;
+        position: relative;
+        z-index: 0;
+    }
+
+    /* PARTNERS */
+    .partners-section {
+        position: relative;
+        z-index: 0;
+    }
+
+    .partners-section .container {
+        padding: 40px 20px;
+        gap: 32px;
+    }
+
+    .partners-section .title {
+        font-size: 36px;
+    }
+
+    .project-card__image-wrapper {
+        min-height: 320px;
+        border-radius: 20px;
+    }
+
+}
+
+/* Адаптив для планшетов и мобильных */
+@media (max-width: 1024px) {
+    .credentials__grid {
+        display: flex;
+        /* Выстраиваем карточки в одну линию */
+        overflow-x: auto;
+        /* Включаем горизонтальный скролл */
+        scroll-snap-type: x mandatory;
+        /* "Примагничивание" карточек при скролле */
+        gap: 20px;
+        /* Расстояние между карточками */
+        padding: 20px 0;
+        /* Отступы сверху и снизу, чтобы тени не обрезались */
+
+        /* Скрываем стандартную полосу прокрутки для красоты */
+        scrollbar-width: none;
+        /* Для Firefox */
+    }
+
+    .credentials__grid::-webkit-scrollbar {
+        display: none;
+        /* Для Chrome, Safari, Edge */
+    }
+
+    .credential-card {
+        flex: 0 0 280px;
+        /* Фиксируем ширину карточки, чтобы она не сжималась */
+        scroll-snap-align: start;
+        /* Карточка будет прилипать к левому краю */
+    }
+}
+
+/* Уточнения для маленьких экранов */
+@media (max-width: 425px) {
+    .credentials__grid {
+        gap: 15px;
+        /* Чуть меньше расстояние на телефонах */
+        padding-left: 20px;
+        /* Чтобы первая карточка не прилипала к краю экрана */
+    }
+
+    .credential-card {
+        flex: 0 0 260px;
+        /* На мобилках делаем карточки чуть уже */
+    }
+}
+
+@media (max-width: 1024px) {
+
+    /* 1. Убираем ограничение ширины контейнера, если оно есть */
+    .faq-container {
+        width: 100%;
+        padding: 0 20px;
+        /* Отступы по бокам, чтобы текст не прилипал */
+        box-sizing: border-box;
+    }
+
+    /* 2. Стили для самого аккордеона */
+    .faq-item {
+        border-bottom: 1px solid #E0E0E0;
+        /* Линия-разделитель как на скрине */
+        padding: 20px 0;
+    }
+
+    /* 3. Оформление заголовка вопроса */
+    .faq-item summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        /* Убираем стандартную стрелочку браузера */
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    /* Убираем стандартный маркер в Safari */
+    .faq-item summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* 4. Стили для вашей иконки (кружок со стрелочкой) */
+    .faq-item .icon {
+        width: 32px;
+        height: 32px;
+        background: #F4F7F9;
+        /* Светлый фон кружка */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: transform 0.3s ease;
+    }
+
+    /* Поворот стрелочки при открытии */
+    .faq-item[open] .icon {
+        transform: rotate(180deg);
+    }
+
+    /* 5. Контент ответа */
+    .faq-content {
+        padding-top: 15px;
+        color: #5F6368;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 425px) {
+    .faq-container {
+        padding: 0 15px;
+        /* На очень узких экранах отступы чуть меньше */
+    }
+
+    .faq-item summary {
+        font-size: 15px;
+        /* Чуть уменьшаем шрифт заголовка */
+    }
 }
